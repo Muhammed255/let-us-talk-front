@@ -17,6 +17,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './components/auth/auth-interceptor';
 import { AuthGuard } from './components/auth/auth.guard';
 import { AuthService } from './components/auth/auth.service';
+import { MaterialModule } from './shared/material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { AuthService } from './components/auth/auth.service';
     BrowserAnimationsModule,
     HttpClientModule,
     PerfectScrollbarModule,
+    MaterialModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

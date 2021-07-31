@@ -13,7 +13,7 @@
     <div fxLayout="row" fxLayoutAlign="center center" *ngIf="currentChat">
         <mat-list class="p-0">
             <mat-list-item>
-                <img matListAvatar [src]="currentChat.image" class="author-img">
+                <img matListAvatar [src]="userImage" class="author-img">
             </mat-list-item>
         </mat-list>
         <span class="author-name">{{currentChat.author}}</span>
@@ -86,7 +86,7 @@
                     <mat-card *ngIf="talks" class="chat-actions"> 
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field class="w-100" style="width: 100%;">
-                                <input matInput placeholder="Enter your text..." (keyup)="sendMessage($event)" [(ngModel)]="newMessage">
+                                <input matInput placeholder="Enter your message..." (keyup)="sendMessage($event)" [(ngModel)]="newMessage">
                             </mat-form-field>
                             <div fxLayout="row" fxLayoutAlign="scenter center">
                                 <button mat-icon-button type="button">
@@ -109,8 +109,8 @@
                                 <h2>Contact Info</h2>
                                 <button mat-icon-button (click)="personInfo.toggle()"><mat-icon>close</mat-icon></button>
                             </div>  
-                            <img *ngIf="currentChat" [src]="currentChat.image" class="py-2">
-                            <h2 *ngIf="currentChat" class="pb-3">{{currentChat.author}}</h2>
+                            <img *ngIf="currentChat" [src]="userImage" class="py-2">
+                            <h2 *ngIf="currentChat" class="pb-3">{{currentChat.firstName + " " + currentChat.lastName}}</h2>
                         </div> 
                         <mat-list>
                             <mat-list-item>

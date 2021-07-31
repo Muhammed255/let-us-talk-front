@@ -43,10 +43,10 @@ export class ChatComponent implements OnInit {
   }
 
   public getChat(obj){
-    // initiate chat first
     if(this.talks){
        this.talks.length = 2;
-    }   
+    }
+    // initiate chat
     this.chatService.initiate(localStorage.getItem("type") + "-to-" + obj.type, [localStorage.getItem("userId"), obj._id]).subscribe(response => {
       if(response.success) {
         this.roomId = response.chatRoom.chatRoomId;
@@ -54,6 +54,7 @@ export class ChatComponent implements OnInit {
           if(result.success) {
             this.chatUsers = result.users;
             console.log(result.conversation)
+
             this.talks = result.conversation;
             this.talks.push(obj);
             this.currentChat = obj;

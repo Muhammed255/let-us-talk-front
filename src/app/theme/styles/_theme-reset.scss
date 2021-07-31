@@ -1,4 +1,10 @@
 @import "variables";
+
+@mixin _mat-toolbar-color($palette) {
+  background: mat-color($palette);
+  color: mat-color($palette, default-contrast);
+}
+
 @mixin theme-reset($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);

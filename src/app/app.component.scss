@@ -1,0 +1,79 @@
+@import "theme/styles/variables";
+
+.top-toolbar {
+  position: relative;
+  height: $top-toolbar-height;
+  z-index: 1;
+}
+
+.pin {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: currentColor;
+}
+
+.sidenav {
+  width: $sidenav-width;
+  overflow: hidden;
+  border: none !important;
+}
+
+.header {
+  position: relative;
+  z-index: 2;
+  transition: 0.3s;
+  &.over {
+    z-index: 99;
+  }
+}
+
+.user-info {
+  height: 100px;
+  width: 250px;
+  box-shadow: none !important;
+}
+
+.user-info img {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.user-info h2 {
+  font-size: 16px;
+  font-weight: 400;
+}
+.user-info h3 {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.user-info h2, .user-info h3 {
+  margin: 0;
+}
+
+.user-info p {
+  font-size: 12px;
+}
+.mat-menu-item {
+  font-size: 14px;
+  height: 36px;
+  line-height: 36px;
+}
+
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
