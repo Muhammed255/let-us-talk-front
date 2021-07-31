@@ -16,7 +16,7 @@
                 <img matListAvatar [src]="userImage" class="author-img">
             </mat-list-item>
         </mat-list>
-        <span class="author-name">{{currentChat.author}}</span>
+        <span class="author-name">{{currentChat.firstName + " " + currentChat.lastName}}</span>
         <button mat-icon-button [matMenuTriggerFor]="personMenu" #personMenuTrigger="matMenuTrigger">
             <mat-icon>more_vert</mat-icon>
         </button>
@@ -70,7 +70,7 @@
                             <mat-list-item *ngFor="let talk of talks" class="talk-item">
                                 <img matListAvatar [src]="userImage">
                                 <p matLine class="message">
-                                    <span [ngClass]="checkAuthUserId(chatUsers) ? 'bg-primary' : 'bg-accent'">{{talk?.message?.messageText}}</span>
+                                    <span [ngClass]="talk?.postedByUser?._id === authUserId ? 'bg-primary' : 'bg-accent'">{{talk?.message?.messageText}}</span>
                                 </p>
                                 <p matLine class="message-date">
                                     <small>{{talk?.createdAt | date:"dd MMMM, yyyy 'at' HH:mm"}}</small>

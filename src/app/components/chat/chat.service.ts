@@ -38,4 +38,8 @@ export class ChatService {
     const messageData = {messageText: messageText};
     return this.http.post<{success: boolean, post: any}>(BACKEND_URL + "room/" + roomId + "/message", messageData);
   }
+
+  markConversationReadByRoomId(roomId: string) {
+    return this.http.put<{success: boolean, data: any}>(BACKEND_URL + "room/" + roomId + "/mark-read", {});
+  }
 }

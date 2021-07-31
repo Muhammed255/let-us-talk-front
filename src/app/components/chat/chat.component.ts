@@ -38,10 +38,6 @@ export class ChatComponent implements OnInit {
     (window.innerWidth <= 768) ? this.sidenavOpen = false : this.sidenavOpen = true;
   }
 
-  checkAuthUserId(arr) {
-    return arr.some(u => u._id === this.authUserId);
-  }
-
   public getChat(obj){
     if(this.talks){
        this.talks.length = 2;
@@ -61,6 +57,11 @@ export class ChatComponent implements OnInit {
             if(window.innerWidth <= 768){
                 this.sidenav.close();
               } 
+              this.chatService.markConversationReadByRoomId(response.chatRoom.chatRoomId).subscribe(con => {
+                if(con.success) {
+                  console.log(con.data);
+                }
+              })
             // console.log('conversation: ', result.conversation)
             // console.log('users: ', result.users)
           }

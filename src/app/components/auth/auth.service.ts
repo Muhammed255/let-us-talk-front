@@ -60,7 +60,7 @@ export class AuthService {
       .subscribe(
         (res) => {
           if (res.success) {
-            this.router.navigate(['/auth/login']);
+            this.router.navigateByUrl('/auth/login');
           }
         },
         (error) => {
@@ -99,7 +99,7 @@ export class AuthService {
               );
               console.log(expirationDate);
               this.saveAuthData(token, expirationDate, this.userId, type);
-              this.router.navigate(['/home']);
+              this.router.navigateByUrl('/home');
             }
           }
         },
@@ -107,6 +107,10 @@ export class AuthService {
           this.authStatusListener.next(false);
         }
       );
+  }
+
+  getUserById(userId: string) {
+    return this.http.get<{success: boolean, user: any}>(BACKEND_URL + "users/" + userId);
   }
 
   autoAuthUser() {
@@ -133,7 +137,7 @@ export class AuthService {
     this.type = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(['/auth/login']);
+    this.router.navigateByUrl('/auth/login');
   }
 
   private setAuthTimer(duration: number) {

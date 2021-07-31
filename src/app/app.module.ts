@@ -18,16 +18,20 @@ import { AuthInterceptor } from './components/auth/auth-interceptor';
 import { AuthGuard } from './components/auth/auth.guard';
 import { AuthService } from './components/auth/auth.service';
 import { MaterialModule } from './shared/material.module';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     PerfectScrollbarModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
