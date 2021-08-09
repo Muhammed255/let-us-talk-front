@@ -1,10 +1,9 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  AfterViewInit,
   OnDestroy,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from './components/auth/auth.service';
 
@@ -13,16 +12,16 @@ import { AuthService } from './components/auth/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy {
   public userImage = 'assets/img/app/user.jpg';
 
-  @ViewChild('sidenav') sidenav: any;
+  // @ViewChild('sidenav') sidenav: any;
   public showSidenav: boolean = false;
   authUser: any;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, public router:Router) {}
 
   ngOnInit() {
     this.authService.autoAuthUser();
@@ -40,12 +39,6 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
             this.authUser = res.user;
           }
         });
-    }
-  }
-
-  ngAfterViewInit(): void {
-    if (window.innerWidth <= 960) {
-      this.sidenav.close();
     }
   }
 

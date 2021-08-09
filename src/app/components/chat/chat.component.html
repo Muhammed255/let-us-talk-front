@@ -26,11 +26,7 @@
                     <mat-icon>account_circle</mat-icon>
                     <span>Contact info</span>
                 </button>
-                <button mat-menu-item>
-                    <mat-icon>volume_mute</mat-icon>
-                    <span>Mute</span>
-                </button>
-                <button mat-menu-item> 
+                <button mat-menu-item (click)="onDeleteRoom()"> 
                     <mat-icon>delete_forever</mat-icon>
                     <span>Clear chat</span>
                 </button>
@@ -64,13 +60,22 @@
                 </mat-drawer>
                 
                 <div>
-                    <perfect-scrollbar>
-                    <div class="chat-content"  [class.actions-visible]="talks">
+                    <div class="chat-content" #scrollMe [class.actions-visible]="talks">
+                        <perfect-scrollbar>
                         <mat-list *ngIf="talks" class="p-0" >
                             <mat-list-item *ngFor="let talk of talks" class="talk-item">
                                 <img matListAvatar [src]="userImage">
                                 <p matLine class="message">
                                     <span [ngClass]="talk?.postedByUser?._id === authUserId ? 'bg-primary' : 'bg-accent'">{{talk?.message?.messageText}}</span>
+                                    <button mat-icon-button *ngIf="talk?.postedByUser?._id === authUserId" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                                        <mat-icon>more_horiz</mat-icon>
+                                      </button>
+                                      <mat-menu #menu="matMenu" yPosition="above" class="options">
+                                        <button mat-menu-item (click)="onDeleteMessgae(talk._id)">
+                                          <mat-icon>delete</mat-icon>
+                                          <span>remove</span>
+                                        </button>
+                                      </mat-menu>
                                 </p>
                                 <p matLine class="message-date">
                                     <small>{{talk?.createdAt | date:"dd MMMM, yyyy 'at' HH:mm"}}</small>
@@ -81,8 +86,8 @@
                             <mat-icon>chat</mat-icon>            
                             <p>Select a interlocutor for talk</p>
                         </div> 
+                    </perfect-scrollbar>
                     </div>
-                </perfect-scrollbar>
                     <mat-card *ngIf="talks" class="chat-actions"> 
                         <div fxLayout="row" fxLayoutAlign="space-between center">
                             <mat-form-field class="w-100" style="width: 100%;">
