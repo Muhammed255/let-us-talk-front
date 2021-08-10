@@ -65,7 +65,7 @@
                         <mat-list *ngIf="talks" class="p-0" >
                             <mat-list-item *ngFor="let talk of talks" class="talk-item">
                                 <img matListAvatar [src]="userImage">
-                                <p matLine class="message">
+                                <p matLine class="message" [matTooltip]="">
                                     <span [ngClass]="talk?.postedByUser?._id === authUserId ? 'bg-primary' : 'bg-accent'">{{talk?.message?.messageText}}</span>
                                     <button mat-icon-button *ngIf="talk?.postedByUser?._id === authUserId" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                                         <mat-icon>more_horiz</mat-icon>
@@ -120,16 +120,16 @@
                         <mat-list>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">mail_outline</mat-icon>
-                                <h3 matLine>author@gmail.com</h3>
+                                <h3 matLine>{{currentChat?.email}}</h3>
                             </mat-list-item>
-                            <mat-list-item>
+                            <!-- <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">call</mat-icon>
                                 <h3 matLine>(202) 756-9756</h3>
                             </mat-list-item>
                             <mat-list-item>
                                 <mat-icon matListIcon class="secondary-text-color">location_on</mat-icon>
                                 <h3 matLine>2903 Avenue Z, Brooklyn, NY</h3>
-                            </mat-list-item>
+                            </mat-list-item> -->
                         </mat-list>                       
                     </div>
                 </perfect-scrollbar>

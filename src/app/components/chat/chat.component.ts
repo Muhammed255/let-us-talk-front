@@ -47,6 +47,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       })
 
     })
+    if(this.talks) {
+      this.getToolTip(this.talks[0].readByRecipients)
+    }
     // this.chatService.socketInit();
     if (window.innerWidth <= 768) {
       this.sidenavOpen = false;
@@ -70,9 +73,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   }
 
   public getChat(obj) {
-    if (this.talks) {
-      this.talks.length = 2;
-    }
+    // if (this.talks) {
+    //   this.talks.length = 2;
+    // }
     // initiate chat
     this.chatService
       .initiate(localStorage.getItem('type') + '-to-' + obj.type, [
@@ -137,6 +140,14 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       try {
           this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
       } catch(err) { }                 
+  }
+
+
+  getToolTip(arr: any[]) {
+    const filtered = arr.filter(a => a.readByUserId._id !== this.authUserId);
+    console.log(filtered);
+    return filtered;
+
   }
 
   public sendMessage($event) {
