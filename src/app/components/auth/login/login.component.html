@@ -1,15 +1,32 @@
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onLogin(loginForm)" #loginForm="ngForm" *ngIf="!isLoading">
-    <mat-form-field>
-      <input matInput name="email" ngModel type="email" placeholder="E-Mail" #emailInput="ngModel" required email>
-      <mat-error *ngIf="emailInput.invalid">Please enter a valid email.</mat-error>
-    </mat-form-field>
-    <mat-form-field>
-      <input type="password" name="password" ngModel matInput placeholder="Password" #passwordInput="ngModel" required>
-      <mat-error *ngIf="passwordInput.invalid">Please enter a valid password.</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Login</button>
-    <a mat-button color="primary" routerLink="/auth/signup">Don't have an account, Signup</a>
-  </form>
-</mat-card>
+<mat-sidenav-container class="h-100">
+  <div fxLayout="row" fxLayoutAlign="center center" class="h-100">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (ngSubmit)="onLogin()" fxFlex="90" *ngIf="!isLoading" fxFlex.gt-sm="30" fxFlex.sm="60" class="mat-elevation-z6">
+            <app-content-header 
+                [icon]="'exit_to_app'" 
+                [title]="'Login'" 
+                [hideBreadcrumb]="true"
+                [hasBgImage]="true" 
+                [class]="'py-4'"></app-content-header>            
+            <div class="p-3">
+                <a mat-button routerLink="/auth/signup" color="accent" class="w-100">Don't have an account? Sign up now!</a>
+                <mat-form-field class="w-100">
+                    <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">mail</mat-icon>
+                    <input matInput placeholder="Email" formControlName="email">
+                    <mat-error *ngIf="form.controls.email.errors?.required">Email is required</mat-error>
+                    <mat-error *ngIf="form.controls.email.hasError('invalidEmail')">Invalid email address</mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100">
+                    <mat-icon matPrefix class="mat-icon-sm mb-2 mr-2 secondary-text-color">lock</mat-icon>
+                    <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" formControlName="password">
+                    <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="form.controls.password.errors?.required">Password is required</mat-error>
+                    <mat-error *ngIf="form.controls.password.hasError('minlength')">Password isn't long enough, minimum of 6 characters</mat-error>
+                </mat-form-field>               
+                <button mat-raised-button color="primary" [disabled]="form.invalid" *ngIf="!isLoading" class="mat-elevation-z6 w-100 mt-3" type="submit">SIGN IN</button>
+            </div>
+        </form>
+  </div>
+</mat-sidenav-container>

@@ -6,6 +6,7 @@ import { ChatService } from './chat.service';
 import { map } from 'rxjs/operators';
 
 import { io, Socket } from 'socket.io-client'
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-chat',
@@ -39,7 +40,7 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
     this.getUsers();
     // this.chatService.connect();
-    this.socket = io('http://localhost:3000/');
+    this.socket = io(environment.apiUrl);
     this.socket.on("connect", () => {
       
       this.socket.on("new message", data => {

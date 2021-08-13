@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { emailValidator, matchingPasswords, matchValues } from 'src/app/utils/app-validators';
 
 import { AuthService } from '../auth.service';
 
@@ -19,7 +20,10 @@ export class SignupComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   signupForm: FormGroup;
 
-  constructor(public authService: AuthService) {}
+  hide = true;
+  hideCon = true;
+
+  constructor(public authService: AuthService, public fb: FormBuilder) {}
 
   ngOnInit() {
     this.authStatusSub = this.authService
@@ -28,36 +32,38 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       });
 
-    this.signupForm = new FormGroup({
-      firstName: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)],
-      }),
-      lastName: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3)],
-      }),
-      type: new FormControl(null, { validators: [Validators.required] }),
-      email: new FormControl(null, { validators: [Validators.required] }),
-      password: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(6)],
-      }),
-    });
+
+      this.initForm();
+  }
+
+  initForm() {
+    this.signupForm = this.fb.group({
+      'firstName': [null, Validators.compose([Validators.required, Validators.minLength(3)])],
+      'lastName': [null, Validators.compose([Validators.required, Validators.minLength(3)])],
+      'email': [null, Validators.compose([Validators.required, emailValidator])],
+      'type': [null, Validators.compose([Validators.required])],
+      'password': ['', Validators.required],
+      'confirmPassword': ['', Validators.required]
+    },{validator: matchingPasswords('password', 'confirmPassword')});
   }
 
   onSignup() {
     if (this.signupForm.invalid) {
+      this.isLoading = true;
       return;
     }
     this.isLoading = true;
     this.authService.createUser(
-      this.signupForm.controls.firstName.value,
-      this.signupForm.controls.lastName.value,
-      this.signupForm.controls.type.value,
-      this.signupForm.controls.email.value,
-      this.signupForm.controls.password.value
+      this.signupForm.value.firstName,
+      this.signupForm.value.lastName,
+      this.signupForm.value.type,
+      this.signupForm.value.email,
+      this.signupForm.value.password
     );
   }
 
   ngOnDestroy() {
     this.authStatusSub.unsubscribe();
+    this.isLoading = false;
   }
 }
